@@ -1,0 +1,116 @@
+body {
+  margin: 0 10vw;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: #eeeeee;
+  background-color: #333333;
+}
+
+// Intro Styles
+
+@keyframes intro-text {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+  70% {
+    transform: translateY(0em);
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes intro-text-span {
+  0% {
+    opacity: 0;
+    margin-left: -1em;
+  }
+  50% {
+    opacity: 0;
+    margin-left: -1em;
+  }
+  80% {
+    margin-left: 0px;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.intro-text {
+  font-size: 8em;
+
+  animation-name: intro-text;
+  animation-duration: 5s;
+
+  span {
+    animation-name: intro-text-span;
+    animation-duration: 7s;
+  }
+}
+
+@keyframes play-button {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.play-button {
+  color: #ffeb3b;
+  background-color: #3f51b5;
+  font-size: 4em;
+  margin-top: 15vh;
+  padding: 0.3em;
+
+  animation-name: play-button;
+  animation-duration: 8s;
+}
+
+// Lost Styles
+
+@keyframes lost-title {
+  0% {
+    opacity: 0;
+    transform: scale(10);
+  }
+  30% {
+    opacity: 0;
+    transform: scale(10);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
+.lost-title {
+  font-size: 8em;
+
+  animation-name: lost-title;
+  animation-duration: 4s;
+}
+
+// Canvas Styles
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  // background-color: blue;
+}
