@@ -305,7 +305,7 @@ class Play extends React.Component {
 
     this.updateGhost();
 
-    this.score += 10;
+    this.score += 1 * this.scoreMult;
   };
 
   playGame = () => {
@@ -317,7 +317,7 @@ class Play extends React.Component {
     for (let y = 0; y < 21; y++) {
       const row = [];
       for (let x = 0; x < 10; x++) {
-        const col = { active: false };
+        const col = { active: false, offX: 0, offY: 0 };
         row.push(col);
       }
       this.grid.push(row);
@@ -336,6 +336,7 @@ class Play extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
 
     this.score = 0;
+    this.scoreMult = 1;
 
     this.timeMult = 1;
 
@@ -395,7 +396,7 @@ class Play extends React.Component {
                 if (y2 === 0) {
                   const empty = [];
                   for (let i = 0; i < this.grid[0].length; i++) {
-                    empty.push({ active: false });
+                    empty.push({ active: false, offX: 0, offY: 0 });
                   }
 
                   nextGrid[y2] = empty;
@@ -421,7 +422,7 @@ class Play extends React.Component {
               }
             });
 
-            this.score += 50;
+            this.score += 5 * this.scoreMult;
 
             if (this.powerTime < 600) {
               this.powerTime += 60;
@@ -469,6 +470,8 @@ class Play extends React.Component {
 
           this.resetShape();
 
+          this.stored = null;
+
           this.score = 0;
         }
       }
@@ -486,8 +489,10 @@ class Play extends React.Component {
       }
 
       if (this.powerTime <= 180) {
+        this.scoreMult = 1;
         this.colorScheme = { box: "darkgrey", square: "grey" };
       } else {
+        this.scoreMult = 2;
         this.colorScheme = { box: "black", square: "white" };
       }
 
@@ -521,9 +526,17 @@ class Play extends React.Component {
       this.grid.forEach((row, y) => {
         row.forEach((col, x) => {
           if (col.active) {
+            col.offX *= 0.95;
+            col.offY *= 0.95;
+
+            if (this.powerTime > 180 && Math.random() < 0.5) {
+              col.offX += Math.random() * 2 - 1;
+              col.offY += Math.random() * 2 - 1;
+            }
+
             this.ctx.fillRect(
-              offset.x + x * this.square.size,
-              offset.y + y * this.square.size,
+              offset.x + col.offX + x * this.square.size,
+              offset.y + col.offY + y * this.square.size,
               this.square.size - this.square.spacing,
               this.square.size - this.square.spacing
             );
@@ -579,7 +592,11 @@ class Play extends React.Component {
       this.ctx.fillStyle = "white";
       this.ctx.font = "30px serif";
 
-      this.ctx.fillText(`Score: ${this.score}`, offset.x, offset.y - 20);
+      this.ctx.fillText(
+        `Score: ${this.score} x${this.scoreMult}`,
+        offset.x,
+        offset.y - 20
+      );
 
       this.runEffects();
     }, 1000 / 60);
