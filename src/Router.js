@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./pages/App";
 import Play from "./pages/Play";
@@ -10,13 +10,13 @@ import NotFound from "./pages/NotFound";
 const Router = () => {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" render={() => <App />} />
-        <Route exact path="/play" render={() => <Play />} />
-        <Route exact path="/lost" render={() => <Lost />} />
+      <Routes>
+        <Route exact path="/" element={<App />} />
+        <Route exact path="/play" element={<Play />} />
+        <Route exact path="/lost" element={<Lost />} />
 
         <Route render={() => <NotFound />} />
-      </Switch>
+      </Routes>
     </BrowserRouter>
   );
 };
